@@ -57,7 +57,7 @@ WHERE CustomerID = 1;
 -- 6. UPDATE: Modify product price and update stock level
 UPDATE Product
 SET 
-    Price = 749.99,
+    Price = 1749.99,
     StockLevel = StockLevel + 25,
     UpdatedAt = CURRENT_TIMESTAMP
 WHERE ProductID = 1;
