@@ -64,21 +64,6 @@ BEGIN
     WHERE OrderID = NEW.OrderID;
 END//
 
--- Trigger to update Order total amount after deleting OrderDetails
-CREATE TRIGGER after_orderdetail_delete
-AFTER DELETE ON OrderDetails
-FOR EACH ROW
-BEGIN
-    -- Update the total amount in Order table
-    UPDATE `Order` 
-    SET TotalAmount = (
-        SELECT COALESCE(SUM(Subtotal), 0)
-        FROM OrderDetails
-        WHERE OrderID = OLD.OrderID
-    )
-    WHERE OrderID = OLD.OrderID;
-END//
-
 -- Trigger to check stock availability before inserting OrderDetails
 CREATE TRIGGER before_orderdetail_insert_check_stock
 BEFORE INSERT ON OrderDetails

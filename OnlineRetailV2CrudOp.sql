@@ -78,7 +78,7 @@ ORDER BY TotalRevenue DESC;
 -- 8. UPDATE: Change order status and payment status
 UPDATE `Order`
 SET 
-    Status = 'Shipped',
+    Status = 'Pending',
     PaymentStatus = 'Paid',
     UpdatedAt = CURRENT_TIMESTAMP
 WHERE OrderID = 1;
