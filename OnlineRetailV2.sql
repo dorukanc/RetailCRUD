@@ -35,7 +35,10 @@ CREATE TABLE `Order` (
 CREATE TABLE Supplier (
     SupplierID INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(255) NOT NULL,
-    ContactInfo VARCHAR(500) NOT NULL,
+    ContactPerson VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) NOT NULL,
+    Phone VARCHAR(20) NOT NULL,
+    Address VARCHAR(500) NOT NULL,
     Status ENUM('Active', 'Inactive') DEFAULT 'Active',
     CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -72,37 +75,6 @@ CREATE TABLE OrderDetails (
     CONSTRAINT chk_subtotal CHECK (Subtotal >= 0)
 );
 
--- Trigger to update stock level after order
-DELIMITER //
-CREATE TRIGGER after_order_detail_insert
-AFTER INSERT ON OrderDetails
-FOR EACH ROW
-BEGIN
-    UPDATE Product 
-    SET StockLevel = StockLevel - NEW.Quantity 
-    WHERE ProductID = NEW.ProductID;
-    
-    -- Update product status if stock becomes 0
-    UPDATE Product 
-    SET Status = CASE 
-        WHEN StockLevel = 0 THEN 'OutOfStock'
-        ELSE Status 
-    END
-    WHERE ProductID = NEW.ProductID;
-END//
-DELIMITER ;
-
--- Trigger to update total amount in Order table
-DELIMITER //
-CREATE TRIGGER after_order_detail_insert_update_total
-AFTER INSERT ON OrderDetails
-FOR EACH ROW
-BEGIN
-    UPDATE `Order` 
-    SET TotalAmount = TotalAmount + NEW.Subtotal 
-    WHERE OrderID = NEW.OrderID;
-END//
-DELIMITER ;
 
 -- Indexes for better query performance
 CREATE INDEX idx_product_category ON Product(Category);
