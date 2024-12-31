@@ -109,3 +109,18 @@ WHERE o.Status != 'Cancelled'
 GROUP BY c.CustomerID, c.Name, c.Email
 ORDER BY TotalSpent DESC
 LIMIT 10;
+
+-- 11. Create VIEW sales_report--
+
+CREATE VIEW Sales_Report AS 
+SELECT 
+    p.Category,
+    COUNT(DISTINCT o.OrderID) as TotalOrders,
+    SUM(od.Quantity) as TotalUnitsSold,
+    SUM(od.Subtotal) as TotalRevenue
+FROM Product p
+JOIN OrderDetails od ON p.ProductID = od.ProductID
+JOIN `Order` o ON od.OrderID = o.OrderID
+WHERE o.Status != 'Cancelled'
+GROUP BY p.Category
+ORDER BY TotalRevenue DESC;
