@@ -1,3 +1,5 @@
+USE RetailInventoryDBv2;
+
 SELECT * FROM `Order`
 WHERE OrderID = 1; 
 
@@ -24,10 +26,14 @@ SELECT * FROM Sales_Report;
 
 SELECT * FROM Product;
 # call procedures
-CALL AddCustomer('Robin Hood', 'robin@hood.com', '31 Poker St', '123-456-7890');
+CALL AddCustomer('Tijd Bahar', 'tj@hood.com', '32 Poker St', '123-486-7890');
+
 CALL UpdateProductStock(101, 20);
 
 
 
-SELECT * FROM Customer;
+SELECT * FROM `Order`;
+
+DELETE FROM Customer
+WHERE CustomerID = 44;
 

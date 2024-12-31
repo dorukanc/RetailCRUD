@@ -89,12 +89,12 @@ WHERE OrderID = (
     SELECT OrderID 
     FROM `Order` 
     WHERE OrderID = 1 
-    AND Status = 'Pending'
+    AND Status = 'Delivered'
 );
 
 DELETE FROM `Order`
 WHERE OrderID = 1 
-AND Status = 'Pending';
+AND Status = 'Delivered';
 
 -- 10. READ: Find top customers by total purchase amount
 SELECT 
@@ -109,6 +109,15 @@ WHERE o.Status != 'Cancelled'
 GROUP BY c.CustomerID, c.Name, c.Email
 ORDER BY TotalSpent DESC
 LIMIT 10;
+-- 10. Create VIEW low_stock --
+
+CREATE VIEW Low_Stock AS
+SELECT 
+	ProductID, Name
+FROM Product
+WHERE StockLevel < 30;
+
+SELECT * FROM Low_Stock;
 
 -- 11. Create VIEW sales_report--
 
