@@ -1,5 +1,20 @@
 USE RetailInventoryDBv2;
 
+# Write a SQL Query to generate a report showing each supplier along with the names and stock levels of products they supply, only for products with stock level less than 10?
+SELECT 
+	s.SupplierID,
+    s.Name AS SupplierName,
+    p.ProductID,
+    p.Name AS ProductName,
+    p.StockLevel
+FROM Supplier s
+JOIN Product p ON s.SupplierID = p.SupplierID
+WHERE
+	p.StockLevel < 50
+ORDER BY
+	p.StockLevel ASC;
+
+
 SELECT * FROM `Order`
 WHERE OrderID = 1; 
 
